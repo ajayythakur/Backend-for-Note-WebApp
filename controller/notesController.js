@@ -2,11 +2,12 @@ const { noteSchema } = require("../model/notes");
 
 const notes = async(req,res) =>{
     try {
-        const {title,description} = req.body;
+        const {title,description,author} = req.body;
 
         const newNote = await new noteSchema({
             title : title,
-            description : description
+            description : description,
+            author : author
         }).save();
     
         res.status(200).send({

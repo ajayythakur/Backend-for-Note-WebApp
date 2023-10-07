@@ -4,7 +4,6 @@ const { registerSchema } = require("../model/registerModel");
 const bcrypt  = require('bcrypt');
 const { response } = require("express");
 const jwt = require('jsonwebtoken');
-const secret = 'secret##';
 
 const login = async(req,res) =>{
     try {
@@ -25,11 +24,13 @@ const login = async(req,res) =>{
             return res.send('Invalid detials');
         }
 
-        const token = jwt.sign ({_id:user.id}, secret , {expiresIn: '1d'} );
+        const token = jwt.sign ({_id:user.id,name:user.name,email:user.email}, process.env.Secret_Key ,{expiresIn:'60s'});
+
+        // res.cookie("user",user.name)
+
     if(!token) {
         res.send('Error in token generation');
     }
-
     res.status(200).send({
         success : true,
         message : 'LogIn Success',

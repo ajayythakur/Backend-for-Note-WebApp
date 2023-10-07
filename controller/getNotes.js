@@ -1,7 +1,8 @@
 const { noteSchema } = require("../model/notes")
 
 const getNotes = async(req,res) => {
-    const notes = await noteSchema.find();
+    const sort = {createdAt:-1}
+    const notes = await noteSchema.find().sort(sort);
     
     if(!notes){
         return res.send("No Notes found");
